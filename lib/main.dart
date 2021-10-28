@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:portifolio/constants.dart';
 
 import 'home/home_screen.dart';
 
@@ -11,9 +12,10 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      title: 'Portifólio',
+      title: 'Portifólio - Emanuel Santos',
       theme: ThemeData(
-        primarySwatch: Colors.blue,
+        primaryColor: kPrimaryColor,
+        scaffoldBackgroundColor: kBgDarkColor,
       ),
       home: HomeScreen(),
     );
