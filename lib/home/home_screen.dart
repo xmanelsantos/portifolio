@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/painting.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:portifolio/constants.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({Key? key}) : super(key: key);
@@ -9,19 +11,75 @@ class HomeScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final Size size = MediaQuery.of(context).size;
     return Scaffold(
-      body: headerWithCircleAvatar(size),
-      floatingActionButton: FloatingActionButton.extended(
-        onPressed: () {},
-        icon: const Icon(Icons.file_download, color: Colors.black),
-        label: Text(
-          'Download CV',
-          style: GoogleFonts.aBeeZee(
-            color: Colors.black,
-            fontWeight: FontWeight.bold,
+      appBar: AppBar(
+        title: Text(
+          'Portifólio',
+          style: GoogleFonts.bebasNeue(
+            fontSize: 30,
+            fontWeight: FontWeight.w600,
           ),
         ),
-        backgroundColor: kPrimaryColor,
+        elevation: 0,
+        centerTitle: true,
       ),
+      body: SingleChildScrollView(
+        child: Column(
+          children: [
+            headerWithCircleAvatar(size),
+            SizedBox(height: 800),
+            creditsAndMore()
+          ],
+        ),
+      ),
+      floatingActionButton: cvDownloadButton(),
+    );
+  }
+
+  Padding creditsAndMore() {
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 50),
+      child: Center(
+        child: Column(
+          children: [
+            Text(
+              'Esse site foi feito utilizando o Framework Flutter',
+              style: GoogleFonts.aBeeZee(
+                  color: kPrimaryColor.withOpacity(0.7),
+                  fontStyle: FontStyle.italic),
+            ),
+            TextButton(
+              onPressed: () {
+                launch('https://github.com/xmanelsantos/portifolio');
+              },
+              child: Text(
+                'Repositório GitHub',
+                style: GoogleFonts.aBeeZee(
+                  color: kPrimaryColor.withOpacity(0.9),
+                  fontStyle: FontStyle.italic,
+                ),
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+// ? Floating Action Button
+  FloatingActionButton cvDownloadButton() {
+    return FloatingActionButton.extended(
+      onPressed: () {
+        // TODO DOWNLOAD FILE
+      },
+      icon: const Icon(Icons.file_download, color: Colors.black),
+      label: Text(
+        'Download CV',
+        style: GoogleFonts.aBeeZee(
+          color: Colors.black,
+          fontWeight: FontWeight.bold,
+        ),
+      ),
+      backgroundColor: kPrimaryColor,
     );
   }
 
@@ -33,7 +91,10 @@ class HomeScreen extends StatelessWidget {
       width: size.width,
       decoration: const BoxDecoration(
           color: kPrimaryColor,
-          borderRadius: BorderRadius.only(bottomRight: Radius.circular(23)),
+          borderRadius: BorderRadius.only(
+            bottomRight: Radius.circular(23),
+            bottomLeft: Radius.circular(23),
+          ),
           boxShadow: [
             BoxShadow(
               offset: Offset(0, 3),
