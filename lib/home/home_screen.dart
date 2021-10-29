@@ -26,8 +26,49 @@ class HomeScreen extends StatelessWidget {
         child: Column(
           children: [
             headerWithCircleAvatar(size),
-            SizedBox(height: 800),
-            creditsAndMore()
+            Container(
+              padding: const EdgeInsets.symmetric(vertical: 40, horizontal: 20),
+              height: size.height * 0.6,
+              child: Container(
+                padding: const EdgeInsets.all(kDefaultPadding * 3),
+                width: size.width * 0.8,
+                decoration: BoxDecoration(
+                  color: kBgLightColor,
+                  borderRadius: BorderRadius.circular(20),
+                  boxShadow: [
+                    BoxShadow(
+                      color: Colors.black.withOpacity(0.1),
+                      offset: const Offset(0, 10),
+                      blurRadius: 30,
+                    ),
+                  ],
+                ),
+                child: Center(
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceAround,
+                    children: [
+                      Container(
+                        width: size.width * 0.3,
+                        decoration: const BoxDecoration(
+                            image: DecorationImage(
+                          image: NetworkImage(
+                              'https://raw.githubusercontent.com/xmanelsantos/eletronica_app/main/assets/app/icon.png'),
+                        )),
+                      ),
+                      Text(
+                        'Eletrônica App',
+                        style: GoogleFonts.aBeeZee(
+                          fontSize: size.width * 0.05,
+                          fontWeight: FontWeight.w600,
+                          color: Colors.white,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+            ),
+            creditsAndMore(),
           ],
         ),
       ),
@@ -35,6 +76,7 @@ class HomeScreen extends StatelessWidget {
     );
   }
 
+// ? Repository link and buttons
   Padding creditsAndMore() {
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 50),
