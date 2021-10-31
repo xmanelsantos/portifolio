@@ -1,7 +1,9 @@
+import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/painting.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:portifolio/constants.dart';
+import 'package:portifolio/models/packages.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class HomeScreen extends StatelessWidget {
@@ -9,6 +11,33 @@ class HomeScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final List<Package> items = [
+      Package(
+          name: 'Url Launcher',
+          description:
+              'Utilizado para encaminhar a uma página selecionada.\n(Clique aqui e veja em ação.)',
+          image: 'https://i.imgur.com/BcHu5Dv.png',
+          link: 'https://pub.dev/packages/url_launcher'),
+      Package(
+        name: 'Lint',
+        description:
+            'Utilizado para verificar o código.\n(Este código foi verificado.) ',
+        image: 'https://i.imgur.com/WhopBYD.png',
+        link: 'https://pub.dev/packages/lint',
+      ),
+      Package(
+          name: 'Carousel Slider',
+          description: 'Utilizado para criar um carrosel.\n(Igual a esse.)',
+          image: 'https://i.imgur.com/XnTZDr9.png',
+          link: 'https://pub.dev/packages/carousel_slider'),
+      Package(
+        name: 'Google Fonts',
+        description:
+            'Utilizado para utilizar fontes do Google.\n(Iguais a essas.)',
+        image: 'https://i.imgur.com/ptVjP2Q.png',
+        link: 'https://pub.dev/packages/google_fonts',
+      ),
+    ];
     final Size size = MediaQuery.of(context).size;
     return Scaffold(
       appBar: AppBar(
@@ -26,6 +55,70 @@ class HomeScreen extends StatelessWidget {
         child: Column(
           children: [
             headerWithCircleAvatar(size),
+            CarouselSlider(
+              options: CarouselOptions(
+                height: 400,
+                aspectRatio: 4 / 3,
+                autoPlay: true,
+              ),
+              items: items.map((i) {
+                return Builder(
+                  builder: (BuildContext context) {
+                    return InkWell(
+                      onTap: () {
+                        launch(i.link);
+                      },
+                      child: Container(
+                        padding: const EdgeInsets.all(kDefaultPadding),
+                        alignment: Alignment.center,
+                        width: 300,
+                        margin: const EdgeInsets.all(
+                          kDefaultPadding * 2,
+                        ).copyWith(top: kDefaultPadding * 3),
+                        decoration: BoxDecoration(
+                          color: kPrimaryColor,
+                          borderRadius: BorderRadius.circular(10),
+                          boxShadow: const [
+                            BoxShadow(
+                              offset: Offset(0, 10),
+                              blurRadius: 20,
+                              color: Colors.black12,
+                            ),
+                          ],
+                        ),
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Image.network(
+                              i.image,
+                              fit: BoxFit.contain,
+                              height: 200,
+                              width: 200,
+                            ),
+                            Text(
+                              i.name,
+                              style: GoogleFonts.bebasNeue(
+                                fontSize: 30,
+                                fontWeight: FontWeight.w600,
+                              ),
+                            ),
+                            Text(
+                              i.description,
+                              style: GoogleFonts.aBeeZee(
+                                fontSize: 20,
+                                fontWeight: FontWeight.w600,
+                                color: kBgDarkColor,
+                              ),
+                              textAlign: TextAlign.center,
+                            ),
+                          ],
+                        ),
+                      ),
+                    );
+                  },
+                );
+              }).toList(),
+            ),
             cardEletronicaApp(size),
             creditsAndMore(),
           ],
@@ -40,59 +133,64 @@ class HomeScreen extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.symmetric(vertical: 40, horizontal: 20),
       height: size.height * 0.6,
-      child: Container(
-        padding: const EdgeInsets.all(kDefaultPadding * 3),
-        width: size.width * 0.8,
-        decoration: BoxDecoration(
-          color: kBgLightColor,
-          border: Border.all(
-            color: const Color(0xFF3093a3),
-            width: 0.8,
-          ),
-          borderRadius: BorderRadius.circular(20),
-          boxShadow: [
-            BoxShadow(
-              color: Colors.black.withOpacity(0.1),
-              offset: const Offset(0, 10),
-              blurRadius: 30,
+      child: InkWell(
+        onTap: () {
+          launch('https://github.com/xmanelsantos/eletronica_app');
+        },
+        child: Container(
+          padding: const EdgeInsets.all(kDefaultPadding * 3),
+          width: size.width * 0.8,
+          decoration: BoxDecoration(
+            color: kBgLightColor,
+            border: Border.all(
+              color: const Color(0xFF3093a3),
+              width: 0.8,
             ),
-          ],
-        ),
-        child: Center(
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceAround,
-            children: [
-              Container(
-                width: size.width * 0.3,
-                decoration: const BoxDecoration(
-                    image: DecorationImage(
-                  image: NetworkImage(
-                      'https://raw.githubusercontent.com/xmanelsantos/eletronica_app/main/assets/app/icon.png'),
-                )),
+            borderRadius: BorderRadius.circular(20),
+            boxShadow: [
+              BoxShadow(
+                color: Colors.black.withOpacity(0.1),
+                offset: const Offset(0, 10),
+                blurRadius: 30,
               ),
-              RichText(
-                text: TextSpan(
-                  children: [
-                    TextSpan(
-                      text: 'Eletrônica App',
-                      style: GoogleFonts.aBeeZee(
-                        fontSize: size.width * 0.05,
-                        fontWeight: FontWeight.w600,
-                        color: Colors.white,
-                      ),
-                    ),
-                    TextSpan(
-                      text:
-                          '\nAplicativo focado em Controle de Estoque,\ncom uso do Firebase, e muitas interatividades com o usuário.\nEstudo de UI/UX, gerenciamento de estado com Provider e SetState,\ngerador de QR Code, Image Picker e muito mais...',
-                      style: GoogleFonts.aBeeZee(
-                        fontSize: size.width * 0.012,
-                        color: Colors.white.withOpacity(0.7),
-                      ),
-                    ),
-                  ],
-                ),
-              )
             ],
+          ),
+          child: Center(
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
+              children: [
+                Container(
+                  width: size.width * 0.3,
+                  decoration: const BoxDecoration(
+                      image: DecorationImage(
+                    image: NetworkImage(
+                        'https://raw.githubusercontent.com/xmanelsantos/eletronica_app/main/assets/app/icon.png'),
+                  )),
+                ),
+                RichText(
+                  text: TextSpan(
+                    children: [
+                      TextSpan(
+                        text: 'Eletrônica App',
+                        style: GoogleFonts.aBeeZee(
+                          fontSize: size.width * 0.05,
+                          fontWeight: FontWeight.w600,
+                          color: Colors.white,
+                        ),
+                      ),
+                      TextSpan(
+                        text:
+                            '\nAplicativo focado em Controle de Estoque,\ncom uso do Firebase, e muitas interatividades com o usuário.\nEstudo de UI/UX, gerenciamento de estado com Provider e SetState,\ngerador de QR Code, Image Picker e muito mais...',
+                        style: GoogleFonts.aBeeZee(
+                          fontSize: size.width * 0.012,
+                          color: Colors.white.withOpacity(0.7),
+                        ),
+                      ),
+                    ],
+                  ),
+                )
+              ],
+            ),
           ),
         ),
       ),
