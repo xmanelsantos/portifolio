@@ -26,53 +26,76 @@ class HomeScreen extends StatelessWidget {
         child: Column(
           children: [
             headerWithCircleAvatar(size),
-            Container(
-              padding: const EdgeInsets.symmetric(vertical: 40, horizontal: 20),
-              height: size.height * 0.6,
-              child: Container(
-                padding: const EdgeInsets.all(kDefaultPadding * 3),
-                width: size.width * 0.8,
-                decoration: BoxDecoration(
-                  color: kBgLightColor,
-                  borderRadius: BorderRadius.circular(20),
-                  boxShadow: [
-                    BoxShadow(
-                      color: Colors.black.withOpacity(0.1),
-                      offset: const Offset(0, 10),
-                      blurRadius: 30,
-                    ),
-                  ],
-                ),
-                child: Center(
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceAround,
-                    children: [
-                      Container(
-                        width: size.width * 0.3,
-                        decoration: const BoxDecoration(
-                            image: DecorationImage(
-                          image: NetworkImage(
-                              'https://raw.githubusercontent.com/xmanelsantos/eletronica_app/main/assets/app/icon.png'),
-                        )),
-                      ),
-                      Text(
-                        'Eletrônica App',
-                        style: GoogleFonts.aBeeZee(
-                          fontSize: size.width * 0.05,
-                          fontWeight: FontWeight.w600,
-                          color: Colors.white,
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-              ),
-            ),
+            cardEletronicaApp(size),
             creditsAndMore(),
           ],
         ),
       ),
       floatingActionButton: cvDownloadButton(),
+    );
+  }
+
+// ? Card with the eletronic app
+  Container cardEletronicaApp(Size size) {
+    return Container(
+      padding: const EdgeInsets.symmetric(vertical: 40, horizontal: 20),
+      height: size.height * 0.6,
+      child: Container(
+        padding: const EdgeInsets.all(kDefaultPadding * 3),
+        width: size.width * 0.8,
+        decoration: BoxDecoration(
+          color: kBgLightColor,
+          border: Border.all(
+            color: const Color(0xFF3093a3),
+            width: 0.8,
+          ),
+          borderRadius: BorderRadius.circular(20),
+          boxShadow: [
+            BoxShadow(
+              color: Colors.black.withOpacity(0.1),
+              offset: const Offset(0, 10),
+              blurRadius: 30,
+            ),
+          ],
+        ),
+        child: Center(
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceAround,
+            children: [
+              Container(
+                width: size.width * 0.3,
+                decoration: const BoxDecoration(
+                    image: DecorationImage(
+                  image: NetworkImage(
+                      'https://raw.githubusercontent.com/xmanelsantos/eletronica_app/main/assets/app/icon.png'),
+                )),
+              ),
+              RichText(
+                text: TextSpan(
+                  children: [
+                    TextSpan(
+                      text: 'Eletrônica App',
+                      style: GoogleFonts.aBeeZee(
+                        fontSize: size.width * 0.05,
+                        fontWeight: FontWeight.w600,
+                        color: Colors.white,
+                      ),
+                    ),
+                    TextSpan(
+                      text:
+                          '\nAplicativo focado em Controle de Estoque,\ncom uso do Firebase, e muitas interatividades com o usuário.\nEstudo de UI/UX, gerenciamento de estado com Provider e SetState,\ngerador de QR Code, Image Picker e muito mais...',
+                      style: GoogleFonts.aBeeZee(
+                        fontSize: size.width * 0.012,
+                        color: Colors.white.withOpacity(0.7),
+                      ),
+                    ),
+                  ],
+                ),
+              )
+            ],
+          ),
+        ),
+      ),
     );
   }
 
@@ -84,7 +107,7 @@ class HomeScreen extends StatelessWidget {
         child: Column(
           children: [
             Text(
-              'Esse site foi feito utilizando o Framework Flutter',
+              'Esse site foi feito utilizando o Framework Flutter.',
               style: GoogleFonts.aBeeZee(
                   color: kPrimaryColor.withOpacity(0.7),
                   fontStyle: FontStyle.italic),
@@ -157,7 +180,7 @@ class HomeScreen extends StatelessWidget {
               TextSpan(
                 text: 'Emanuel Ferreira dos Santos',
                 style: GoogleFonts.bebasNeue(
-                  fontSize: size.width / 20,
+                  fontSize: size.width / 23,
                   fontWeight: FontWeight.bold,
                   color: Colors.black87,
                 ),
@@ -165,7 +188,7 @@ class HomeScreen extends StatelessWidget {
               TextSpan(
                 text: '\nCiência da Computação | Flutter',
                 style: GoogleFonts.bebasNeue(
-                  fontSize: size.width / 30,
+                  fontSize: size.width / 35,
                   color: kBgDarkColor,
                 ),
               ),
