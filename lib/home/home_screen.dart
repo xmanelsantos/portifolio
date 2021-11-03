@@ -4,14 +4,18 @@ import 'package:flutter/painting.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:portifolio/constants.dart';
 import 'package:portifolio/models/packages.dart';
+import 'package:portifolio/models/repositories.dart';
 import 'package:url_launcher/url_launcher.dart';
+
+import 'components/title_with_shadow.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    final List<Package> items = [
+    // ? Current packages in this project
+    final List<Package> packages = [
       Package(
           name: 'Url Launcher',
           description:
@@ -38,88 +42,42 @@ class HomeScreen extends StatelessWidget {
         link: 'https://pub.dev/packages/google_fonts',
       ),
     ];
+    // ? Current aplications in my portfolio  (I don't have any)??
+    final List<Repository> repositories = [
+      Repository(
+        title: 'Eletrônica App',
+        description:
+            '\nAplicativo focado em Controle de Estoque, com uso do Firebase, \ne muitas interatividades com o usuário. Estudo de UI/UX, \ngerenciamento de estado com Provider e SetState, gerador de QR Code, \nImage Picker e muito mais...',
+        image:
+            'https://raw.githubusercontent.com/xmanelsantos/eletronica_app/main/assets/app/icon.png',
+        url: 'https://github.com/xmanelsantos/eletronica_app',
+      ),
+      Repository(
+        title: 'Portifolio',
+        description: '\nEste é o meu portifólio.\n(Este é o meu portifólio.)',
+        image: 'https://i.imgur.com/6nqeUVC.png',
+        url: 'https://github.com/xmanelsantos/portifolio',
+      ),
+      Repository(
+        title: 'Random Colors',
+        description:
+            '\nPrimeiro aplicativo feito, para estudo de gerenciamento de estado, \nusando Provider. Projeto descontinuado.',
+        image: 'https://i.imgur.com/khzPPBO.png',
+        url: 'https://github.com/xmanelsantos/random_colors',
+      ),
+    ];
+
     final Size size = MediaQuery.of(context).size;
     return Scaffold(
-      appBar: AppBar(
-        title: Text(
-          'Portifólio',
-          style: GoogleFonts.bebasNeue(
-            fontSize: 30,
-            fontWeight: FontWeight.w600,
-          ),
-        ),
-        elevation: 0,
-        centerTitle: true,
-      ),
+      appBar: _homeAppBar(),
       body: SingleChildScrollView(
         child: Column(
           children: [
             headerWithCircleAvatar(size),
-            CarouselSlider(
-              options: CarouselOptions(
-                height: 400,
-                aspectRatio: 4 / 3,
-                autoPlay: true,
-              ),
-              items: items.map((i) {
-                return Builder(
-                  builder: (BuildContext context) {
-                    return InkWell(
-                      onTap: () {
-                        launch(i.link);
-                      },
-                      child: Container(
-                        padding: const EdgeInsets.all(kDefaultPadding),
-                        alignment: Alignment.center,
-                        width: 300,
-                        margin: const EdgeInsets.all(
-                          kDefaultPadding * 2,
-                        ).copyWith(top: kDefaultPadding * 3),
-                        decoration: BoxDecoration(
-                          color: kPrimaryColor,
-                          borderRadius: BorderRadius.circular(10),
-                          boxShadow: const [
-                            BoxShadow(
-                              offset: Offset(0, 10),
-                              blurRadius: 20,
-                              color: Colors.black12,
-                            ),
-                          ],
-                        ),
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Image.network(
-                              i.image,
-                              fit: BoxFit.contain,
-                              height: 200,
-                              width: 200,
-                            ),
-                            Text(
-                              i.name,
-                              style: GoogleFonts.bebasNeue(
-                                fontSize: 30,
-                                fontWeight: FontWeight.w600,
-                              ),
-                            ),
-                            Text(
-                              i.description,
-                              style: GoogleFonts.aBeeZee(
-                                fontSize: 20,
-                                fontWeight: FontWeight.w600,
-                                color: kBgDarkColor,
-                              ),
-                              textAlign: TextAlign.center,
-                            ),
-                          ],
-                        ),
-                      ),
-                    );
-                  },
-                );
-              }).toList(),
-            ),
-            cardEletronicaApp(size),
+            const TitleWithShadow(title: 'Meus Projetos'),
+            carouselRepositories(size, repositories),
+            const TitleWithShadow(title: 'Packages usados'),
+            carouselPackages(packages),
             creditsAndMore(),
           ],
         ),
@@ -128,74 +86,174 @@ class HomeScreen extends StatelessWidget {
     );
   }
 
-// ? Card with the eletronic app
-  Container cardEletronicaApp(Size size) {
-    return Container(
-      padding: const EdgeInsets.symmetric(vertical: 40, horizontal: 20),
-      height: size.height * 0.6,
-      child: InkWell(
-        onTap: () {
-          launch('https://github.com/xmanelsantos/eletronica_app');
-        },
-        child: Container(
-          padding: const EdgeInsets.all(kDefaultPadding * 3),
-          width: size.width * 0.8,
-          decoration: BoxDecoration(
-            color: kBgLightColor,
-            border: Border.all(
-              color: const Color(0xFF3093a3),
-              width: 0.8,
-            ),
-            borderRadius: BorderRadius.circular(20),
-            boxShadow: [
-              BoxShadow(
-                color: Colors.black.withOpacity(0.1),
-                offset: const Offset(0, 10),
-                blurRadius: 30,
-              ),
-            ],
-          ),
-          child: Center(
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceAround,
-              children: [
-                Container(
-                  width: size.width * 0.3,
-                  decoration: const BoxDecoration(
-                      image: DecorationImage(
-                    image: NetworkImage(
-                        'https://raw.githubusercontent.com/xmanelsantos/eletronica_app/main/assets/app/icon.png'),
-                  )),
-                ),
-                RichText(
-                  text: TextSpan(
-                    children: [
-                      TextSpan(
-                        text: 'Eletrônica App',
-                        style: GoogleFonts.aBeeZee(
-                          fontSize: size.width * 0.05,
-                          fontWeight: FontWeight.w600,
-                          color: Colors.white,
-                        ),
-                      ),
-                      TextSpan(
-                        text:
-                            '\nAplicativo focado em Controle de Estoque,\ncom uso do Firebase, e muitas interatividades com o usuário.\nEstudo de UI/UX, gerenciamento de estado com Provider e SetState,\ngerador de QR Code, Image Picker e muito mais...',
-                        style: GoogleFonts.aBeeZee(
-                          fontSize: size.width * 0.012,
-                          color: Colors.white.withOpacity(0.7),
-                        ),
+// ? Carousel with repositories
+  CarouselSlider carouselRepositories(
+      Size size, List<Repository> repositories) {
+    return CarouselSlider(
+      options: CarouselOptions(
+        height: size.height * 0.4,
+        enableInfiniteScroll: false,
+        autoPlay: true,
+        autoPlayInterval: const Duration(seconds: 5),
+        autoPlayAnimationDuration: const Duration(milliseconds: 1000),
+        enlargeCenterPage: true,
+      ),
+      items: repositories
+          .map((repository) => InkWell(
+                onTap: () {
+                  launch(repository.url);
+                },
+                child: Container(
+                  padding: const EdgeInsets.all(kDefaultPadding * 3),
+                  height: size.height * 0.6,
+                  width: size.width * 0.8,
+                  decoration: BoxDecoration(
+                    color: kBgLightColor,
+                    border: Border.all(
+                      color: kPrimaryColor,
+                      width: 0.8,
+                    ),
+                    borderRadius: BorderRadius.circular(20),
+                    boxShadow: [
+                      BoxShadow(
+                        color: Colors.black.withOpacity(0.1),
+                        offset: const Offset(0, 10),
+                        blurRadius: 30,
                       ),
                     ],
                   ),
-                )
-              ],
-            ),
-          ),
-        ),
-      ),
+                  child: Center(
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceAround,
+                      children: [
+                        Container(
+                          width: size.width * 0.2,
+                          decoration: BoxDecoration(
+                              image: DecorationImage(
+                            image: NetworkImage(repository.image),
+                          )),
+                        ),
+                        Wrap(
+                          children: [
+                            RichText(
+                              text: TextSpan(
+                                children: [
+                                  TextSpan(
+                                    text: repository.title,
+                                    style: GoogleFonts.aBeeZee(
+                                      fontSize: size.width * 0.05,
+                                      fontWeight: FontWeight.w600,
+                                      color: Colors.white,
+                                    ),
+                                  ),
+                                  TextSpan(
+                                    text: repository.description,
+                                    style: GoogleFonts.aBeeZee(
+                                      fontSize: size.width * 0.012,
+                                      color: Colors.white.withOpacity(0.7),
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ],
+                        )
+                      ],
+                    ),
+                  ),
+                ),
+              ))
+          .toList(),
     );
   }
+
+// ? AppBar
+  AppBar _homeAppBar() {
+    return AppBar(
+      title: Text(
+        'Portifólio',
+        style: GoogleFonts.bebasNeue(
+          fontSize: 30,
+          fontWeight: FontWeight.w600,
+        ),
+      ),
+      elevation: 0,
+      centerTitle: true,
+    );
+  }
+
+// ? Carousel with packages
+  CarouselSlider carouselPackages(List<Package> packages) {
+    return CarouselSlider(
+      options: CarouselOptions(
+        height: 400,
+        aspectRatio: 4 / 3,
+        enableInfiniteScroll: false,
+        autoPlay: true,
+        autoPlayInterval: const Duration(seconds: 5),
+        autoPlayAnimationDuration: const Duration(milliseconds: 1000),
+      ),
+      items: packages.map((i) {
+        return Builder(
+          builder: (BuildContext context) {
+            return InkWell(
+              onTap: () {
+                launch(i.link);
+              },
+              child: Container(
+                padding: const EdgeInsets.all(kDefaultPadding),
+                alignment: Alignment.center,
+                width: 300,
+                margin: const EdgeInsets.all(
+                  kDefaultPadding * 2,
+                ).copyWith(top: kDefaultPadding * 3),
+                decoration: BoxDecoration(
+                  color: kPrimaryColor,
+                  borderRadius: BorderRadius.circular(10),
+                  boxShadow: const [
+                    BoxShadow(
+                      offset: Offset(0, 10),
+                      blurRadius: 20,
+                      color: Colors.black12,
+                    ),
+                  ],
+                ),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Image.network(
+                      i.image,
+                      fit: BoxFit.contain,
+                      height: 200,
+                      width: 200,
+                    ),
+                    Text(
+                      i.name,
+                      style: GoogleFonts.bebasNeue(
+                        fontSize: 30,
+                        fontWeight: FontWeight.w600,
+                      ),
+                    ),
+                    Text(
+                      i.description,
+                      style: GoogleFonts.aBeeZee(
+                        fontSize: 15,
+                        fontWeight: FontWeight.w600,
+                        color: kBgDarkColor,
+                      ),
+                      textAlign: TextAlign.center,
+                    ),
+                  ],
+                ),
+              ),
+            );
+          },
+        );
+      }).toList(),
+    );
+  }
+
+// ? Card with the eletronic app
 
 // ? Repository link and buttons
   Padding creditsAndMore() {
@@ -268,10 +326,16 @@ class HomeScreen extends StatelessWidget {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceAround,
         children: [
-          CircleAvatar(
-            backgroundImage: const NetworkImage(
-                'https://avatars.githubusercontent.com/u/79411116?v=4'),
-            radius: size.height / 7,
+          Container(
+            height: size.height * 0.3,
+            width: size.width * 0.3,
+            decoration: const BoxDecoration(
+                shape: BoxShape.circle,
+                image: DecorationImage(
+                  image: NetworkImage(
+                    'https://avatars.githubusercontent.com/u/79411116?v=4',
+                  ),
+                )),
           ),
           RichText(
             text: TextSpan(children: [
