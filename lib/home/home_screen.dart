@@ -74,6 +74,40 @@ class HomeScreen extends StatelessWidget {
         child: Column(
           children: [
             headerWithCircleAvatar(size),
+            const TitleWithShadow(title: 'Sobre Mim'),
+            Row(
+              children: [
+                Container(
+                  transformAlignment: Alignment.centerLeft,
+                  alignment: Alignment.center,
+                  width: size.width * 0.8,
+                  height: size.height * 0.6,
+                  decoration: const BoxDecoration(
+                    color: kPrimaryColor,
+                    boxShadow: [
+                      BoxShadow(
+                        color: Colors.black54,
+                        offset: Offset(0, 5),
+                        blurRadius: 10,
+                      ),
+                    ],
+                    borderRadius: BorderRadius.only(
+                      topRight: Radius.circular(40),
+                      bottomRight: Radius.circular(40),
+                    ),
+                  ),
+                  child: Text(
+                    'Tenho 19 anos, moro em Fortaleza, Ceará.',
+                    style: GoogleFonts.aBeeZee(
+                      color: kBgLightColor,
+                      fontSize: 20,
+                      fontWeight: FontWeight.w600,
+                    ),
+                  ),
+                ),
+                const Spacer(),
+              ],
+            ),
             const TitleWithShadow(title: 'Meus Projetos'),
             carouselRepositories(size, repositories),
             const TitleWithShadow(title: 'Packages usados'),
