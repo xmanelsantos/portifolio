@@ -42,7 +42,7 @@ class HomeScreen extends StatelessWidget {
         link: 'https://pub.dev/packages/google_fonts',
       ),
     ];
-    // ? Current aplications in my portfolio  (I don't have any)??
+    // ? Current aplications in my portfolio
     final List<Repository> repositories = [
       Repository(
         title: 'Eletrônica App',
@@ -78,6 +78,7 @@ class HomeScreen extends StatelessWidget {
             Row(
               children: [
                 Container(
+                  padding: const EdgeInsets.all(8),
                   transformAlignment: Alignment.centerLeft,
                   alignment: Alignment.center,
                   width: size.width * 0.8,
@@ -97,12 +98,13 @@ class HomeScreen extends StatelessWidget {
                     ),
                   ),
                   child: Text(
-                    'Tenho 19 anos, moro em Fortaleza, Ceará.',
+                    'Tenho 19 anos, moro em Fortaleza, Ceará.\nSempre ligado a tecnologias na minha infância e juventude,\nHoje estou no meu terceiro semestre de Ciências da Computação.',
                     style: GoogleFonts.aBeeZee(
                       color: kBgLightColor,
                       fontSize: 20,
                       fontWeight: FontWeight.w600,
                     ),
+                    overflow: TextOverflow.fade,
                   ),
                 ),
                 const Spacer(),
@@ -325,6 +327,8 @@ class HomeScreen extends StatelessWidget {
     return FloatingActionButton.extended(
       onPressed: () {
         // TODO DOWNLOAD FILE
+        launch(
+            'https://drive.google.com/file/d/1m-vXmt4LlcvAqiSUHdHtUYikpCt4K42v/view');
       },
       icon: const Icon(Icons.file_download, color: Colors.black),
       label: Text(
