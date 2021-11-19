@@ -75,41 +75,7 @@ class HomeScreen extends StatelessWidget {
           children: [
             headerWithCircleAvatar(size),
             const TitleWithShadow(title: 'Sobre Mim'),
-            Row(
-              children: [
-                Container(
-                  padding: const EdgeInsets.all(8),
-                  transformAlignment: Alignment.centerLeft,
-                  alignment: Alignment.center,
-                  width: size.width * 0.8,
-                  height: size.height * 0.6,
-                  decoration: const BoxDecoration(
-                    color: kPrimaryColor,
-                    boxShadow: [
-                      BoxShadow(
-                        color: Colors.black54,
-                        offset: Offset(0, 5),
-                        blurRadius: 10,
-                      ),
-                    ],
-                    borderRadius: BorderRadius.only(
-                      topRight: Radius.circular(40),
-                      bottomRight: Radius.circular(40),
-                    ),
-                  ),
-                  child: Text(
-                    'Tenho 19 anos, moro em Fortaleza, Ceará.\nSempre ligado a tecnologias na minha infância e juventude,\nHoje estou no meu terceiro semestre de Ciências da Computação.',
-                    style: GoogleFonts.aBeeZee(
-                      color: kBgLightColor,
-                      fontSize: 20,
-                      fontWeight: FontWeight.w600,
-                    ),
-                    overflow: TextOverflow.fade,
-                  ),
-                ),
-                const Spacer(),
-              ],
-            ),
+            aboutCard(size),
             const TitleWithShadow(title: 'Meus Projetos'),
             carouselRepositories(size, repositories),
             const TitleWithShadow(title: 'Packages usados'),
@@ -119,6 +85,45 @@ class HomeScreen extends StatelessWidget {
         ),
       ),
       floatingActionButton: cvDownloadButton(),
+    );
+  }
+
+// About card with my informations
+  Row aboutCard(Size size) {
+    return Row(
+      children: [
+        Container(
+          padding: const EdgeInsets.all(8),
+          transformAlignment: Alignment.centerLeft,
+          alignment: Alignment.center,
+          width: size.width * 0.8,
+          height: size.height * 0.6,
+          decoration: const BoxDecoration(
+            color: kPrimaryColor,
+            boxShadow: [
+              BoxShadow(
+                color: Colors.black54,
+                offset: Offset(0, 5),
+                blurRadius: 10,
+              ),
+            ],
+            borderRadius: BorderRadius.only(
+              topRight: Radius.circular(40),
+              bottomRight: Radius.circular(40),
+            ),
+          ),
+          child: Text(
+            'Tenho 19 anos, moro em Fortaleza, Ceará.\nSempre ligado a tecnologias na minha infância e juventude,\nHoje estou no meu terceiro semestre de Ciências da Computação.',
+            style: GoogleFonts.aBeeZee(
+              color: kBgLightColor,
+              fontSize: 20,
+              fontWeight: FontWeight.w600,
+            ),
+            overflow: TextOverflow.fade,
+          ),
+        ),
+        const Spacer(),
+      ],
     );
   }
 
