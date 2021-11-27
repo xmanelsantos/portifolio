@@ -48,8 +48,7 @@ class HomeScreen extends StatelessWidget {
         title: 'Eletrônica App',
         description:
             '\nAplicativo focado em Controle de Estoque, com uso do Firebase, \ne muitas interatividades com o usuário. Estudo de UI/UX, \ngerenciamento de estado com Provider e SetState, gerador de QR Code, \nImage Picker e muito mais...',
-        image:
-            'https://raw.githubusercontent.com/xmanelsantos/eletronica_app/main/assets/app/icon.png',
+        image: 'https://i.imgur.com/ziyRyxx.png',
         url: 'https://github.com/xmanelsantos/eletronica_app',
       ),
       Repository(
@@ -88,7 +87,7 @@ class HomeScreen extends StatelessWidget {
     );
   }
 
-// About card with my informations
+// ? About card with my informations
   Row aboutCard(Size size) {
     return Row(
       children: [
